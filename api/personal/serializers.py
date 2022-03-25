@@ -9,14 +9,16 @@ class EquipoSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class JugadoresSerializer(serializers.HyperlinkedModelSerializer):
-	equipo = serializers.StringRelatedField(many=True)
+	# equipo = EquipoSerializer(read_only=True, many=False)
 	class Meta:
 		model = Jugadores
-		fields = ['equipo', 'foto', 'nombre', 'apellido', 'fecha_nacimiento', 'pocision', 'numero', 'titular']
+		# fields = ['equipo', 'foto', 'nombre', 'apellido', 'fecha_nacimiento', 'posicion', 'numero', 'titular']
+		fields = ['foto', 'nombre', 'apellido', 'fecha_nacimiento', 'posicion', 'numero', 'titular']
 
 
 class TecnicosSerializer(serializers.HyperlinkedModelSerializer):
-	equipo = serializers.StringRelatedField(many=True)
+	# equipo = EquipoSerializer(read_only=True, many=False)
 	class Meta:
 		model = Tecnicos
-		fields = ['equipo', 'nombre', 'apellido', 'fecha_nacimiento', 'nacionalidad', 'roll']
+		# fields = ['equipo', 'nombre', 'apellido', 'fecha_nacimiento', 'nacionalidad', 'rol']
+		fields = ['nombre', 'apellido', 'fecha_nacimiento', 'nacionalidad', 'rol']

@@ -3,3 +3,4 @@ FIFA/personal/migrations
 FIFA/db.sqlite3
 FIFA/db.sqlite3
 personal/migrations
+*.sqlite3

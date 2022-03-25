@@ -1,6 +1,6 @@
 from django.urls import include, path
 from rest_framework import routers
-from api.personal.views import EquipoViewSet, JugadoresViewSet, TecnicosViewSet
+from api.personal.views import EquipoViewSet, JugadoresViewSet, TecnicosViewSet, ReporteViewSet
 
 router = routers.DefaultRouter()
 router.register(r'equipos', EquipoViewSet)
@@ -11,5 +11,6 @@ router.register(r'tecnicos', TecnicosViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/reporte/', ReporteViewSet.as_view())
 ]
