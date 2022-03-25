@@ -15,7 +15,7 @@ from api.personal.serializers import EquipoSerializer, JugadoresSerializer, Tecn
 from personal.functions import *
 
 
-class EquipoViewSet(viewsets.ModelViewSet):
+class EquipoViewSet(generics.RetrieveUpdateAPIView):
 	"""
 	API endpoint that allows users to be viewed or edited.
 	"""
@@ -24,6 +24,20 @@ class EquipoViewSet(viewsets.ModelViewSet):
 	# permission_classes = [permissions.IsAuthenticated]
 	permission_classes = [permissions.AllowAny]
 
+	def get(self, request, *args, **kwargs):
+		try:
+			# validate_parameters(['pk'], [kwargs])
+			# id_tarea = kwargs['pk']
+			id_equipo = get_parameter('pk', [request.data, kwargs])
+			queryset = validate_model_list(Equipo.objects.filter(id=id_equipo), 'Equipo')
+			serializer = EquipoSerializer(queryset, many=True)
+			data = {'mensaje': "detalles de tarea",
+					'code': 1, 'data': serializer.data[0]}
+			return Response(data, status=201)
+		except Exception as e:
+			traceback.print_exc()
+			data = {'message': e.args[0], 'code': 2, 'data': None}
+			return Response(data, status=201)
 	########################################################
 	######################## FALTAN ########################
 	# POST
@@ -32,7 +46,7 @@ class EquipoViewSet(viewsets.ModelViewSet):
 	########################################################
 
 
-class JugadoresViewSet(viewsets.ModelViewSet):
+class JugadoresViewSet(generics.RetrieveUpdateAPIView):
 	"""
 	API endpoint that allows groups to be viewed or edited.
 	"""
@@ -41,6 +55,21 @@ class JugadoresViewSet(viewsets.ModelViewSet):
 	# permission_classes = [permissions.IsAuthenticated]
 	permission_classes = [permissions.AllowAny]
 
+	def get(self, request, *args, **kwargs):
+		try:
+			# validate_parameters(['pk'], [kwargs])
+			# id_tarea = kwargs['pk']
+			id_jugador = get_parameter('pk', [request.data, kwargs])
+			queryset = validate_model_list(Jugadores.objects.filter(id=id_jugador), 'Jugador')
+			serializer = JugadoresSerializer(queryset, many=True)
+			data = {'mensaje': "detalles de tarea",
+					'code': 1, 'data': serializer.data[0]}
+			return Response(data, status=201)
+		except Exception as e:
+			traceback.print_exc()
+			data = {'message': e.args[0], 'code': 2, 'data': None}
+			return Response(data, status=201)
+
 	########################################################
 	######################## FALTAN ########################
 	# POST
@@ -49,7 +78,7 @@ class JugadoresViewSet(viewsets.ModelViewSet):
 	########################################################
 
 
-class TecnicosViewSet(viewsets.ModelViewSet):
+class TecnicosViewSet(generics.RetrieveUpdateAPIView):
 	"""
 	API endpoint that allows groups to be viewed or edited.
 	"""
@@ -57,6 +86,21 @@ class TecnicosViewSet(viewsets.ModelViewSet):
 	serializer_class = TecnicosSerializer
 	# permission_classes = [permissions.IsAuthenticated]
 	permission_classes = [permissions.AllowAny]
+
+	def get(self, request, *args, **kwargs):
+		try:
+			# validate_parameters(['pk'], [kwargs])
+			# id_tarea = kwargs['pk']
+			id_tecnico = get_parameter('pk', [request.data, kwargs])
+			queryset = validate_model_list(Tecnicos.objects.filter(id=id_tecnico), 'Tecnico')
+			serializer = TecnicosSerializer(queryset, many=True)
+			data = {'mensaje': "detalles de tarea",
+					'code': 1, 'data': serializer.data[0]}
+			return Response(data, status=201)
+		except Exception as e:
+			traceback.print_exc()
+			data = {'message': e.args[0], 'code': 2, 'data': None}
+			return Response(data, status=201)
 
 	########################################################
 	######################## FALTAN ########################
