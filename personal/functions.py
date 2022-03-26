@@ -23,18 +23,21 @@ def get_parameter(key, group_params, param_type = None, allow_empty = True):
 			if param_type:
 				if isinstance(params[key], param_type):
 					if param_type == list:
-						if len(params[key]) == 0 and not allow_empty:
-							raise Exception(f"Clave [{key}]: Sin elementos")
+						if len(params[key]) == 0 and allow_empty == False:
+							raise Exception(f"Clave [{key}]: Sin datos")
 				else:
 					raise Exception(f"Clave [{key}]: Tipo incorrecto")
+			elif not allow_empty:
+				if len(params[key]) == 0:
+					raise Exception(f"Clave [{key}]: Sin datos")
 			return params[key]
 	raise Exception(f"Clave [{key}]: Requerida")
 
 def validate_type(commands, mensaje):
 	try:
 		if commands[0] == 'fecha':
-			fecha = datetime.strptime(commands[1], '%Y-%m-%d')
-			return fecha if fecha >= datetime.fromisoformat(date.today().isoformat()) + commands[2] else 1/0
+			fecha = datetime.strptime(commands[1], '%Y-%m-%d').date()
+			return fecha
 		elif commands[0] == 'text':
 			return commands[1] if len(commands[1]) > 0 else 1/0
 	except:
@@ -43,3 +46,10 @@ def validate_type(commands, mensaje):
 def calcular_edad(born):
     today = date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
+def is_double(valor):
+	try:
+		nuevo = float(valor)
+		return True
+	except:
+		return False
